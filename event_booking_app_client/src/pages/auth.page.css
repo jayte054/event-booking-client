@@ -1,0 +1,45 @@
+.auth-main{
+    width:auto;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: rgb(150, 146, 153);
+}
+
+.auth-main h2 {
+    text-align: center;
+}
+
+.auth-body{
+    margin:  auto;  
+    text-align: center;
+    align-items: center;
+}
+.auth-param label{
+    font-weight: bold;
+    display: block;
+}
+
+.auth-param input {
+    width: 20%;
+    border-color: black;
+}
+
+.auth-param{
+    margin-bottom: 1rem;
+}
+
+.auth-button button {
+    background-color: aquamarine;
+    margin: 0 0 0 0.2rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px rgba(0 0 0 0.26)
+}
+
+.auth-button button:hover,
+.auth-button active:active{
+    background-color: darkcyan;
+    border-color: darkcyan;
+}

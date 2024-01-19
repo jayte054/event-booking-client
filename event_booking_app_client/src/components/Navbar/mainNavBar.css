@@ -1,0 +1,25 @@
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: beige;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: .5rem;
+}
+
+.nav-link ul{
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-link li{
+    margin: 1rem;
+    list-style: none;
+}
+
+.nav-link a:hover,
+.nav-link a:active {
+    color: blue
+}
+
