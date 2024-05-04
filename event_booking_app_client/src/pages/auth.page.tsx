@@ -1,20 +1,66 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import "./auth.page.css"
+import { AuthContext } from "../context/authContext"
+import { useNavigate } from "react-router-dom"
+
+
 export const AuthPage = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isSignIn, setIsSignIn] = useState(true)
+    const {updateUser } = useContext(AuthContext)
+
+
+    const navigate = useNavigate()
 
     const switchModeHandler = () => {
         setIsSignIn(!isSignIn)
     }
 
-    const submitHandler = async (e: any) => {
+    const CreateUser = async(e: any) => {
+        e.preventDefault()
+
+        if(email.trim().length === 0 || password.trim().length === 0) {
+            return;
+        }
+        const requestBody = {
+            query: `
+                mutation {
+                    createUser(UserInput:{email: "${email}", password: "${password}"}) {
+                        id,
+                        email
+                    }
+                }
+            `
+        }
+
+        try{
+            const response = await fetch("http://localhost:4000/graphql", {
+                method: "POST",
+                body: JSON.stringify(requestBody),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            console.log(response)
+            const responseData = await response.json()
+            console.log(responseData.json)
+            if (responseData.data && responseData.data.createUser) {
+                console.log(`user ${email} created successfully`);
+            }
+            switchModeHandler()
+            return responseData
+        }catch(error){
+            console.log(error)
+            throw error
+        }
+    }
+
+    const SignIn = async (e: any) => {
         e.preventDefault()
         if(email.trim().length === 0 || password.trim().length === 0) {
             return;
         }
-        console.log(email, password)   
         
         let requestBody = {
             query: `
@@ -28,20 +74,6 @@ export const AuthPage = () => {
             `
         }
         
-        if(!isSignIn) {
-            requestBody = {
-                query: `
-                    mutation {
-                        createUser(UserInput: {email: "${email}", password: "${password}"}) {
-                            id,
-                            email,
-                        }
-                    }
-                `
-            }
-        }
-       
-
         try {
             const response = await fetch("http://localhost:4000/graphql", {
                 method: "POST",
@@ -51,15 +83,25 @@ export const AuthPage = () => {
                 }
             })
             const responseData = await response.json()
-            {!isSignIn ?  console.log(responseData.data.createUser, "created successfully") : console.log(responseData.data.userLogin, "successfully signed in")}
+            await updateUser(responseData)
+            console.log(responseData.data.userLogin, "successfully signed in")
+            navigate("/eventPage")
             return response
         }catch(error) {
+            console.log(error)
             throw error
         }
        
     }
 
-   
+   const submitHandler = async(e:any) => {
+    e.preventDefault()
+    if(!isSignIn) {
+       await CreateUser(e)
+    } else {
+         SignIn(e)
+    }
+   }
 
     return(
         <div className="auth-main">

@@ -1,0 +1,63 @@
+.event-body{ 
+    margin: 2rem
+}
+
+.event-button button {
+    background-color: aquamarine;
+    border: 1px solid aquamarine;
+    margin: 0 0 0 0.2rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26)
+}
+
+.event-c{
+    border:1px solid aquamarine;
+    border-radius: 1rem;
+    text-align: center;
+    padding: 1rem;
+    margin: 2rem auto;
+    width: 30rem;
+    max-width:80%;
+}
+
+.event-form{
+    display: grid; 
+}
+
+.event-form label{
+    margin-top: .5rem;
+}
+
+.event-list{
+    width: 40rem;
+    max-width: 90%;
+    margin: 2rem auto;
+    list-Style: none;
+    padding: 0;
+    align-items: center;
+}
+
+.event-list-item{
+    margin: 1rem auto;
+    padding: 1rem;
+    border: 1px solid aquamarine;
+    background-color: beige;   
+}
+
+.event-item{
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-between;
+}
+
+.event-item p{
+    color: grey
+}
+
+.event-description{
+    margin-top: 1rem;
+    position: right;
+    color: grey;
+}

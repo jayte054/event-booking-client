@@ -31,11 +31,12 @@
 
 .auth-button button {
     background-color: aquamarine;
+    border: 1px solid aquamarine;
     margin: 0 0 0 0.2rem;
     font-weight: bold;
     border-radius: 1rem;
     cursor: pointer;
-    box-shadow: 1px 1px 5px rgba(0 0 0 0.26)
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26)
 }
 
 .auth-button button:hover,

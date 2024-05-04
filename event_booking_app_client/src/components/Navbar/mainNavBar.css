@@ -19,7 +19,8 @@
 }
 
 .nav-link a:hover,
-.nav-link a:active {
+.nav-link a:active,
+.nav-link a.active {
     color: blue
 }
 

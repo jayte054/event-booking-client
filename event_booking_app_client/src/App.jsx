@@ -4,11 +4,14 @@ import { AuthPage } from './pages/auth.page'
 import { EventPage } from './pages/event.page'
 import { BookingPage } from './pages/booking.page'
 import { MainNavBar } from './components/Navbar/mainNavBar'
+import { AuthProvider } from './context/authContext'
+import React from 'react'
 
 function App() {
 
   return (
     <div>
+      <AuthProvider>
       <Router>
         <MainNavBar />
         <Routes>
@@ -18,6 +21,8 @@ function App() {
           <Route path = "/eventPage" element = {<EventPage />} />
         </Routes>
       </Router>
+      </AuthProvider>
+      
     </div>
   )
 }
