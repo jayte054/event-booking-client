@@ -11,8 +11,18 @@ export const Modal = (props) => {
                 {props.children}
             </section>
             <section className="modal_actions">
-                {props.canCreate && <button className="modal-button" type="button" onClick={props.onCreate}>Create</button>}
-                {props.canCancel && <button className="modal-button" type="button" onClick={props.onCancel}>Cancel</button>}
+                {props.canCreate && <button className="modal-button" 
+                                            type="button" 
+                                            onClick={props.onCreate}
+                                            >
+                                                {props.confirmText}
+                                    </button>}
+                {props.canCancel && <button className="modal-button" 
+                                            type="button" 
+                                            onClick={props.onCancel}
+                                            >
+                                                Cancel
+                                    </button>}
             </section>
         </div>
     )
