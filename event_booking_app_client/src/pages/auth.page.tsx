@@ -25,14 +25,18 @@ export const AuthPage = () => {
         }
         const requestBody = {
             query: `
-                mutation {
-                    createUser(UserInput:{email: "${email}", password: "${password}"}) {
+                mutation createUser($email: String!, $password: String!){
+                    createUser(UserInput:{email: $email, password: $password}) {
                         id,
                         email
                     }
                 }
-            `
+            `,
+            variables: {
+            email: email,
+            password: password,
         }
+    };
 
         try{
             const response = await fetch("http://localhost:4000/graphql", {
@@ -64,14 +68,18 @@ export const AuthPage = () => {
         
         let requestBody = {
             query: `
-                query {
-                    userLogin(email: "${email}", password: "${password}") {
+                query userLogin($email: String!, $password: String!){
+                    userLogin(email: $email, password: $password) {
                         userId,
                         token,
                         tokenExpiration
                     }
                 }
-            `
+            `,
+            variables: {
+                email: email,
+                password: password
+            }
         }
         
         try {

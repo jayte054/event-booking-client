@@ -51,15 +51,21 @@ export const EventPage = () => {
 
         const requestBody = {
             query: `
-            mutation {
-                createEvent(EventInput: {title: "${event.title}", price: ${event.price}, date: "${event.date}", description: "${event.description}" }) {
+            mutation createEvent($title: String!, $price: Float!, $date: String!, $desc: String!){
+                createEvent(EventInput: {title: $title, price: $price, date: $date, description: $desc }) {
                     title,
                     price,
                     date,
                     description,
                 }
             }
-            `
+            `,
+            variables: {
+                title: title,
+                price: price,
+                date,
+                desc: event.description
+            }
         }
         try {
             const response = await fetch("http://localhost:4000/graphql", {
