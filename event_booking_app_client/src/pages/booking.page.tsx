@@ -1,13 +1,18 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useEffect, useState, useContext  } from "react"
+import { useNavigate } from "react-router-dom"
 import "./booking.page.css"
 import { AuthContext } from "../context/authContext"
 import { Spinner } from "../components/spinner/spinner"
 import { BookingList } from "../components/bookingList/bookingList"
+import { BookingsChart } from "../components/bookingsChart/bookingsChart"
+import { BookingsControl } from "../components/bookingsControl/bookingsControl"
 
 export const BookingPage = () => {
     const [bookings, setBookings] = useState<any>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [outputType, setIsOutputType] = useState("list")
     const {user} = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const {token} = user
 
@@ -22,7 +27,8 @@ export const BookingPage = () => {
                             event{
                                 title
                                 description
-                                date
+                                date,
+                                price
                             }
                         }
                     }
@@ -106,30 +112,64 @@ export const BookingPage = () => {
                 console.log(error)
                 setIsLoading(false)
             }
-
            
         }   
 
-    return (
+        useEffect(() => {
+            if(!token) {
+                navigate("/authPage")
+            }
+        },[token, navigate])
+
+        // const changeOutputType = () => {
+        //     if( outputType === "list") {
+        //         return outputType
+        //     }else {
+        //       return  setIsOutputType("chart")
+        //     }
+        // }
+
+        const changeOutputType = (type) => {
+            setIsOutputType(type);
+          };
+
+
+        const ContentData = () => {
+            if (isLoading) {
+              return <Spinner />;
+            } else {
+              return (
+                <React.Fragment>
+                  <BookingsControl activeOutputType = {outputType} 
+                                   onChange = {changeOutputType} 
+                    />
+                  <div>
+                    {outputType === "list" ? (
+                      <BookingList bookings={bookings} onDelete={cancelBookingHandler} />
+                    ) : (
+                      <BookingsChart bookings={bookings} />
+                    )}
+                  </div>
+                </React.Fragment>
+              );
+            }
+          };
+    
+
+    return token ? (
+            <div className="booking-body">
+                <h2>My booking page</h2>
+                    {ContentData()}
+                    {/* {isLoading ?( <Spinner />) : ( 
+                    <div>            
+                        <BookingList bookings = {bookings} onDelete = {cancelBookingHandler}/>
+                    </div>) } */}
+            </div>
         
-        <div className="booking-body">
-            <h2>My booking page</h2>
-            {isLoading ?( <Spinner />) : ( 
-            <div>
-                {/* {bookings.map(booking => (
-                    <ul key={booking._id}>
-                        <li>
-                            {booking.event.title} ..... {booking.event.description}
-                        </li>
-                        <span>{new Date(booking.event.date).toLocaleDateString()}</span>
-                    </ul>
-                    )
-                )} */}
-                {/* {booking} */}
-                <BookingList bookings = {bookings} onDelete = {cancelBookingHandler}/>
-            </div>) }
-           
-        </div>
-    )
+    ): null
 }
+
+// function elseif(arg0: boolean) {
+//     throw new Error("Function not implemented.")
+// }
 

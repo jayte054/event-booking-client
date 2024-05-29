@@ -227,7 +227,13 @@ export const EventPage = () => {
         
     }
 
-    return (
+    useEffect(() => {
+        if(!token) {
+            navigate("/authPage")
+        }
+    }, [token, navigate])
+
+    return token ? (
         <div className="event-body">
             <h2>My Event Page</h2>
             {(createEvent || selectedEvent) && <Backdrop />}
@@ -295,5 +301,5 @@ export const EventPage = () => {
               
             
         </div>
-    )
+    ) : null
 }
